@@ -1,7 +1,6 @@
 package br.com.nelioalves.cursomc.curso_mc.resources;
 
 import java.util.Collection;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +13,7 @@ import br.com.nelioalves.cursomc.curso_mc.services.CidadeService;
 import javassist.tools.rmi.ObjectNotFoundException;
 
 @RestController
-@RequestMapping("/cidades")
+@RequestMapping(value = "/cidades")
 public class CidadeResource {
 
 	@Autowired
@@ -22,10 +21,7 @@ public class CidadeResource {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Cidade find(@PathVariable Integer id) throws ObjectNotFoundException {
-		
-		Optional<Cidade> objetoCidade = cidadeService.buscaPorId(id);
-
-		return objetoCidade.orElseThrow(() -> new ObjectNotFoundException(
+		return cidadeService.buscaPorId(id).orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cidade.class.getName()));
 	}
 
@@ -33,5 +29,5 @@ public class CidadeResource {
 	public Collection<Cidade> findAll() {
 		return cidadeService.buscarTodos();
 	}
-	
+
 }
