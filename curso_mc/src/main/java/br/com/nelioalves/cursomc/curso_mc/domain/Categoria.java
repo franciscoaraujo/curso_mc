@@ -1,6 +1,7 @@
 package br.com.nelioalves.cursomc.curso_mc.domain;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +15,8 @@ import javax.persistence.SequenceGenerator;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-public class Categoria {
+public class Categoria implements Serializable {
 
-	@SuppressWarnings("unused")
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -30,10 +30,16 @@ public class Categoria {
 	@ManyToMany(mappedBy = "categorias")
 	private List<Produto> produtos = new ArrayList<>();
 
+	
+	public Categoria() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public Categoria(Integer id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}
+	
 
 	public Integer getId() {
 		return id;

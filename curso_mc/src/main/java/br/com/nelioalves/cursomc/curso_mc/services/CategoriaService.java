@@ -1,6 +1,7 @@
 package br.com.nelioalves.cursomc.curso_mc.services;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,9 @@ public class CategoriaService {
 	@Autowired
 	CategoriaRepository categoriaRepository;
 
-	public Categoria buscar(Integer id) {
-		Categoria categoria = categoriaRepository.getOne(id);
-		return categoria;
+	public Optional<Categoria> buscar(Integer id) {
+		Optional<Categoria> objOptional = categoriaRepository.findById(id);
+		return objOptional;
 	}
 
 	public Categoria cadastrar(Categoria categoria) {
