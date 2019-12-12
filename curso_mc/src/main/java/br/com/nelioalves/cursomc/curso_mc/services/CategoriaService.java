@@ -16,8 +16,7 @@ public class CategoriaService {
 	CategoriaRepository categoriaRepository;
 
 	public Optional<Categoria> buscar(Integer id) {
-		Optional<Categoria> objOptional = categoriaRepository.findById(id);
-		return objOptional;
+		return categoriaRepository.findById(id);
 	}
 
 	public Categoria cadastrar(Categoria categoria) {
