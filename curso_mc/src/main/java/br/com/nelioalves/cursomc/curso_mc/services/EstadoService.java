@@ -1,6 +1,6 @@
 package br.com.nelioalves.cursomc.curso_mc.services;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,24 +19,26 @@ public class EstadoService implements IService<Estado>{
 	public Optional<Estado> buscaPorId(Integer id) {
 		return estadoRepository.findById(id);
 	}
-
+	
+	@Override
 	public Estado cadastrar(Estado estado) {
 		return estadoRepository.save(estado);
 	}
 
-	public List<Estado> buscarTodos() {
+	@Override
+	public Collection<Estado> buscarTodos() {
 		return estadoRepository.findAll();
 	}
 
+	@Override
 	public Estado alterar(Estado estado) {
 		return estadoRepository.save(estado);
 	}
 
+	@Override
 	public void excluir(Estado estado) {
 		estadoRepository.delete(estado);
 	}
-
-	
 	
 	
 }
