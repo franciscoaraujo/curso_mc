@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.nelioalves.cursomc.curso_mc.domain.Categoria;
 import br.com.nelioalves.cursomc.curso_mc.repositories.CategoriaRepository;
+import javassist.tools.rmi.ObjectNotFoundException;
 
 @Service
 public class CategoriaService implements IService<Categoria> {
@@ -16,8 +17,9 @@ public class CategoriaService implements IService<Categoria> {
 	private CategoriaRepository categoriaRepository;
 
 	@Override
-	public Optional<Categoria> buscaPorId(Integer id) {
-		return categoriaRepository.findById(id);
+	public Categoria buscaPorId(Integer id) throws ObjectNotFoundException {
+		return categoriaRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
 
 	@Override

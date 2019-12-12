@@ -6,8 +6,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.nelioalves.cursomc.curso_mc.domain.Categoria;
 import br.com.nelioalves.cursomc.curso_mc.domain.Estado;
 import br.com.nelioalves.cursomc.curso_mc.repositories.EstadoRepository;
+import javassist.tools.rmi.ObjectNotFoundException;
 
 @Service
 public class EstadoService implements IService<Estado>{
@@ -16,8 +18,9 @@ public class EstadoService implements IService<Estado>{
 	private EstadoRepository estadoRepository;
 	
 	@Override
-	public Optional<Estado> buscaPorId(Integer id) {
-		return estadoRepository.findById(id);
+	public Estado buscaPorId(Integer id) throws ObjectNotFoundException {
+		return estadoRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
 	
 	@Override

@@ -3,9 +3,11 @@ package br.com.nelioalves.cursomc.curso_mc.services;
 import java.util.Collection;
 import java.util.Optional;
 
+import javassist.tools.rmi.ObjectNotFoundException;
+
 public interface IService<T> {
 
-	public Optional<T> buscaPorId(Integer t); 
+	public T buscaPorId(Integer t) throws ObjectNotFoundException; 
 
 	public T cadastrar(T t);
 

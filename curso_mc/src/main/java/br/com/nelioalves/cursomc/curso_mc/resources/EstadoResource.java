@@ -22,17 +22,13 @@ public class EstadoResource {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Estado find(@PathVariable Integer id) throws ObjectNotFoundException {
-
-		Optional<Estado> objEstado = estadoService.buscaPorId(id);
-
-		return objEstado.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + Estado.class.getName()));
+		return estadoService.buscaPorId(id);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET)
-	public Collection<Estado> findAll(){
+	public Collection<Estado> findAll() {
 		return estadoService.buscarTodos();
-		
+
 	}
 
 }

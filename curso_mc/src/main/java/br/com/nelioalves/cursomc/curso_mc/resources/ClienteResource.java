@@ -1,32 +1,26 @@
 package br.com.nelioalves.cursomc.curso_mc.resources;
 
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.nelioalves.cursomc.curso_mc.domain.Cidade;
-import br.com.nelioalves.cursomc.curso_mc.services.CidadeService;
+import br.com.nelioalves.cursomc.curso_mc.services.ClienteService;
 import javassist.tools.rmi.ObjectNotFoundException;
 
 @RestController
-@RequestMapping(value = "/cidades")
-public class CidadeResource {
+@RequestMapping(value = "/clientes")
+public class ClienteResource {
 
 	@Autowired
-	private CidadeService cidadeService;
-
+	private ClienteService clienteService;
+	
+	
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public Cidade find(@PathVariable Integer id) throws ObjectNotFoundException {
-		return cidadeService.buscaPorId(id);
+	public ResponseEntity<?> find(@PathVariable Integer id) throws ObjectNotFoundException {
+		return ResponseEntity.ok(clienteService.buscaPorId(id));
 	}
-
-	@RequestMapping(method = RequestMethod.GET)
-	public Collection<Cidade> findAll() {
-		return cidadeService.buscarTodos();
-	}
-
 }

@@ -6,8 +6,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.nelioalves.cursomc.curso_mc.domain.Categoria;
 import br.com.nelioalves.cursomc.curso_mc.domain.Cidade;
 import br.com.nelioalves.cursomc.curso_mc.repositories.CidadeRepository;
+import javassist.tools.rmi.ObjectNotFoundException;
 
 @Service
 public class CidadeService implements IService<Cidade> {
@@ -16,8 +18,9 @@ public class CidadeService implements IService<Cidade> {
 	private CidadeRepository cidadeRepository;
 
 	@Override
-	public Optional<Cidade> buscaPorId(Integer t) {
-		return cidadeRepository.findById(t);
+	public Cidade buscaPorId(Integer t) throws ObjectNotFoundException {
+		return cidadeRepository.findById(t).orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + t + ", Tipo: " + Categoria.class.getName()));
 	}
 
 	@Override

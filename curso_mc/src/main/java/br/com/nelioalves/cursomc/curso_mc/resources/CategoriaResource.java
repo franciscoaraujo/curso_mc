@@ -1,7 +1,5 @@
 package br.com.nelioalves.cursomc.curso_mc.resources;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,11 +19,8 @@ public class CategoriaResource {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Categoria find(@PathVariable Integer id) throws ObjectNotFoundException {
-		
-		Optional<Categoria> objOptional = service.buscaPorId(id);
-		
-		return objOptional.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
+		return service.buscaPorId(id);
+
 	}
 
 //	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
