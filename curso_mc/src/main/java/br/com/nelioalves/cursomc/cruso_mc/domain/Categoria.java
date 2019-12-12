@@ -20,7 +20,7 @@ public class Categoria {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@GeneratedValue(generator = "question_generator")
+	//@GeneratedValue(generator = "question_generator") //Caso eu utilize o Postgres!!
 	//@SequenceGenerator(name = "question_generator", sequenceName = "question_sequence", initialValue = 1)
 	private Integer id;
 	private String nome;
