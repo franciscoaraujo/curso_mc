@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,13 +29,14 @@ public class Cliente implements Serializable {
 	private String cpfOuCnpj;
 	private Integer tipo;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "cliente")
 	private Collection<Endereco> enderecos = new ArrayList<>();
 	
+	@ElementCollection
+	@CollectionTable(name="telefone")
 	private Set<String> telefones = new HashSet<>();
 	
 	public Cliente() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
@@ -89,11 +92,34 @@ public class Cliente implements Serializable {
 		this.tipo = tipo.getCodigo();
 		return this;
 	}
+	
+	
+	public Collection<Endereco> getEnderecos() {
+		return enderecos;
+	}
+
+	public void setEnderecos(Collection<Endereco> enderecos) {
+		this.enderecos = enderecos;
+	}
+
+	public Set<String> getTelefones() {
+		return telefones;
+	}
+
+	public void setTelefones(Set<String> telefones) {
+		this.telefones = telefones;
+	}
+
+	public void setTipo(Integer tipo) {
+		this.tipo = tipo;
+	}
+
+	
 
 	@Override
 	public String toString() {
 		return "Cliente [id=" + id + ", nome=" + nome + ", email=" + email + ", cpfOuCnpj=" + cpfOuCnpj + ", tipo="
-				+ tipo + "]";
+				+ tipo + ", enderecos=" + enderecos + ", telefones=" + telefones + "]";
 	}
 
 	@Override
