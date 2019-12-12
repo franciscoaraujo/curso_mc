@@ -1,4 +1,5 @@
-package br.com.nelioalves.cursomc.cruso_mc.domain;
+package br.com.nelioalves.cursomc.curso_mc.domain;
+
 
 import java.util.ArrayList;
 import java.util.List;

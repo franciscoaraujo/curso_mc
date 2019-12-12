@@ -7,10 +7,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import br.com.nelioalves.cursomc.cruso_mc.domain.Categoria;
-import br.com.nelioalves.cursomc.cruso_mc.domain.Produto;
-import br.com.nelioalves.cursomc.cruso_mc.repsitories.CategoriaRepository;
-import br.com.nelioalves.cursomc.cruso_mc.repsitories.ProdutoRepository;
+import br.com.nelioalves.cursomc.curso_mc.domain.Categoria;
+import br.com.nelioalves.cursomc.curso_mc.domain.Produto;
+import br.com.nelioalves.cursomc.curso_mc.repositories.CategoriaRepository;
+import br.com.nelioalves.cursomc.curso_mc.repositories.ProdutoRepository;
 
 
 @SpringBootApplication
