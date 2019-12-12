@@ -10,12 +10,12 @@ import br.com.nelioalves.cursomc.curso_mc.domain.Categoria;
 import br.com.nelioalves.cursomc.curso_mc.repositories.CategoriaRepository;
 
 @Service
-public class CategoriaService {
+public class CategoriaService implements IService<Categoria>{
 
 	@Autowired
 	CategoriaRepository categoriaRepository;
 
-	public Optional<Categoria> buscar(Integer id) {
+	public Optional<Categoria> buscaPorId(Integer id) {
 		return categoriaRepository.findById(id);
 	}
 
@@ -34,4 +34,6 @@ public class CategoriaService {
 	public void excluir(Categoria categoria) {
 		categoriaRepository.delete(categoria);
 	}
+
+	
 }

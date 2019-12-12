@@ -26,7 +26,7 @@ public class CategoriaResource {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Categoria find(@PathVariable Integer id) throws ObjectNotFoundException {
-		Optional<Categoria> objOptional = service.buscar(id);
+		Optional<Categoria> objOptional = service.buscaPorId(id);
 		return objOptional.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}

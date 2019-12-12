@@ -1,9 +1,7 @@
 package br.com.nelioalves.cursomc.curso_mc.services;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Optional;
-
-import br.com.nelioalves.cursomc.curso_mc.domain.Estado;
 
 public interface IService<T> {
 
@@ -11,7 +9,7 @@ public interface IService<T> {
 
 	public T cadastrar(T t);
 
-	public List<T> buscarTodos();
+	public Collection<T> buscarTodos();
 
 	public T alterar(T t); 
 
