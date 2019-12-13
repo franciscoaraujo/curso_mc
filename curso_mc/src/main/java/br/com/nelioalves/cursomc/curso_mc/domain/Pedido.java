@@ -31,6 +31,7 @@ public class Pedido implements Serializable {
 	@JsonFormat(pattern = "dd/MM/yyyy : HH:mm")
 	private Date instantDate;
 	
+	
 	/* Mapeamento bidirecional 1 pra 1 */
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido") // Evitando erro de entidade transiente quando for salvar o pedido e o pagamento
 	private Pagamento pagamento;
