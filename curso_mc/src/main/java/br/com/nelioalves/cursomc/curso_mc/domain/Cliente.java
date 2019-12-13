@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import br.com.nelioalves.cursomc.curso_mc.domain.enums.TipoCliente;
@@ -38,7 +39,8 @@ public class Cliente implements Serializable {
 	@ElementCollection
 	@CollectionTable(name = "telefone")
 	private Set<String> telefones = new HashSet<>();
-	
+	/*-Ja está feita a permissão @JsonManagedReference na classe Pedido-*/
+	@JsonBackReference/*/*Isso eh aplicado quando temos mapeamento bidirecional com Cliente, posso serializar o Cliente de um pedido mas nao Serializar o Pedido de um cliente*/
 	@OneToMany(mappedBy = "cliente")//por quem ele foi mapeado la do outro lado da relação
 	private Collection<Pedido> pedidos = new ArrayList<>();
 
@@ -46,7 +48,6 @@ public class Cliente implements Serializable {
 	}
 
 	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
-		
 		this.id = id;
 		this.nome = nome;
 		this.email = email;

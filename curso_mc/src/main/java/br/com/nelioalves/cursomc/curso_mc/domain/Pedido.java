@@ -15,6 +15,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Pedido implements Serializable {
 
@@ -23,12 +27,16 @@ public class Pedido implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@JsonFormat(pattern = "dd/MM/yyyy : HH:mm")
 	private Date instantDate;
-
+	
+	@JsonManagedReference
 	/* Mapeamento bidirecional 1 pra 1 */
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido") // Evitando erro de entidade transiente quando for salvar o pedido e o pagamento
 	private Pagamento pagamento;
 
+	@JsonManagedReference/*Isso eh aplicado quando temos mapeamento bidirecional com Cliente, posso serializar o Cliente de um pedido e nao o pedido de um cliente */
 	@ManyToOne
 	@JoinColumn(name = "_id")
 	private Cliente cliente;
@@ -36,7 +44,7 @@ public class Pedido implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "endereco_de_entrega_id")
 	private Endereco enderecoDeEntraga;
-
+	
 	@OneToMany(mappedBy = "id.pedido") // informando quem mapeou do outro lado que foi o objeto id.pedido -  Aqui tem que ser OnetoMany
 	private Set<ItemPedido> itens = new HashSet<>();
 
