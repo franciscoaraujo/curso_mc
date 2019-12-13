@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
 import br.com.nelioalves.cursomc.curso_mc.domain.enums.EstadoPagamento;
 
 @Entity
-@Inheritance(strategy =  InheritanceType.JOINED)/*Mapeamento de heranca com PagametoComBoleto e PagamentoComCartao*/
+@Inheritance(strategy =  InheritanceType.JOINED)/*Mapeamento de heranca com PagamentoComBoleto e PagamentoComCartao*/
 public abstract class Pagamento implements Serializable{
 	
 	private static final long serialVersionUID = 1L;

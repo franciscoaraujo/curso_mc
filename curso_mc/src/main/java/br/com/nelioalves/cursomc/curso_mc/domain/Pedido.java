@@ -2,6 +2,8 @@ package br.com.nelioalves.cursomc.curso_mc.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,33 +12,34 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
 public class Pedido implements Serializable {
-	
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private Date instantDate;
-	
-	/*Mapeamento bidirecional 1 pra 1*/
-	@OneToOne(cascade = CascadeType.ALL,mappedBy = "pedido")//Evitando erro de entidade transiente quando for salvar o pedido e o pagamento
+
+	/* Mapeamento bidirecional 1 pra 1 */
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido") // Evitando erro de entidade transiente quando for salvar o pedido e o pagamento
 	private Pagamento pagamento;
-	
 
 	@ManyToOne
-	@JoinColumn(name="_id")
+	@JoinColumn(name = "_id")
 	private Cliente cliente;
-	
+
 	@ManyToOne
-	@JoinColumn(name="endereco_de_entrega_id")
+	@JoinColumn(name = "endereco_de_entrega_id")
 	private Endereco enderecoDeEntraga;
-	
-	
+
+	@OneToMany(mappedBy = "id.pedido") // informando quem mapeou do outro lado que foi o objeto id.pedido -  Aqui tem que ser OnetoMany
+	private Set<ItemPedido> itens = new HashSet<>();
+
 	public Pedido() {
 		// TODO Auto-generated constructor stub
 	}
@@ -72,8 +75,7 @@ public class Pedido implements Serializable {
 	public void setPagamento(Pagamento pagamento) {
 		this.pagamento = pagamento;
 	}
-	
-	
+
 	public Cliente getCliente() {
 		return cliente;
 	}
@@ -90,10 +92,18 @@ public class Pedido implements Serializable {
 		this.enderecoDeEntraga = enderecoDeEntraga;
 	}
 
+	public Set<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
+	}
+
 	@Override
 	public String toString() {
 		return "Pedido [id=" + id + ", instantDate=" + instantDate + ", pagamento=" + pagamento + ", cliente=" + cliente
-				+ ", enderecoDeEntraga=" + enderecoDeEntraga + "]";
+				+ ", enderecoDeEntraga=" + enderecoDeEntraga + ", itens=" + itens + "]";
 	}
 
 	@Override

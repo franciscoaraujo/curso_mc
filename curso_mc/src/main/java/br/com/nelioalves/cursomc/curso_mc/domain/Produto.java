@@ -1,9 +1,11 @@
 package br.com.nelioalves.cursomc.curso_mc.domain;
 
 import java.io.Serializable;
-
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,26 +14,32 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Produto implements Serializable {
-	
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	private Double preco;
-	
-	@JsonBackReference/*Omitindo a lista de produtos, porque ja esta sendo feito no outro relacionanto*/
+
+	@JsonBackReference /*
+						 * Omitindo a lista de produtos, porque ja esta sendo feito no outro
+						 * relacionanto
+						 */
 	@ManyToMany
 	@JoinTable(name = "produto_categoria", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
 	private List<Categoria> categorias = new ArrayList<>();
 	
+	@OneToMany(mappedBy = "id.produto")
+	private Set<ItemPedido> itens = new HashSet<>();
+
 	public Produto() {
 		// TODO Auto-generated constructor stub
 	}
@@ -40,6 +48,14 @@ public class Produto implements Serializable {
 		this.id = id;
 		this.nome = nome;
 		this.preco = preco;
+	}
+
+	public Collection<Pedido> getPedidos() {
+		Collection<Pedido> pedidos = new ArrayList<>();
+		for (Pedido pedido : pedidos) {
+			pedidos.add(pedido);
+		}
+		return pedidos;
 	}
 
 	public Integer getId() {
@@ -78,9 +94,18 @@ public class Produto implements Serializable {
 		return this;
 	}
 
+	public Set<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
+	}
+
 	@Override
 	public String toString() {
-		return "Produto [id=" + id + ", nome=" + nome + ", preco=" + preco + ", categorias=" + categorias + "]";
+		return "Produto [id=" + id + ", nome=" + nome + ", preco=" + preco + ", categorias=" + categorias + ", itens="
+				+ itens + "]";
 	}
 
 	@Override
@@ -108,6 +133,4 @@ public class Produto implements Serializable {
 		return true;
 	}
 
-	
-	
 }
