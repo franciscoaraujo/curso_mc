@@ -36,9 +36,11 @@ public class PedidoService implements IService<Pedido> {
 		return pedidoRepository.save(pedido);
 	}
 
+	
 	@Override
-	public void excluir(Pedido pedido) {
-		pedidoRepository.delete(pedido);
+	public void excluir(Integer t) throws ObjectNotFoundException {
+		// TODO Auto-generated method stub
+		
 	}
-
+	
 }

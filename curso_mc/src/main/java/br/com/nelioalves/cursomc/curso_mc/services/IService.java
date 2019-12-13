@@ -15,6 +15,7 @@ public interface IService<T> {
 
 	public T alterar(T t) throws ObjectNotFoundException; 
 
-	public void excluir( T t); 
+	
+	public void excluir( Integer  t) throws ObjectNotFoundException; 
 	
 }

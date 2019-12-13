@@ -40,8 +40,9 @@ public class ClienteService  implements IService<Cliente> {
 		return null;
 	}
 
+	
 	@Override
-	public void excluir(Cliente t) {
+	public void excluir(Integer t) throws ObjectNotFoundException {
 		// TODO Auto-generated method stub
 		
 	}

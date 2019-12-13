@@ -1,9 +1,9 @@
 package br.com.nelioalves.cursomc.curso_mc.services;
 
 import java.util.Collection;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.nelioalves.cursomc.curso_mc.domain.Categoria;
@@ -38,10 +38,18 @@ public class CategoriaService implements IService<Categoria> {
 		buscaPorId(categoria.getId());
 		return categoriaRepository.save(categoria);
 	}
-
+	
+	
 	@Override
-	public void excluir(Categoria categoria) {
-		categoriaRepository.delete(categoria);
+	public void excluir(Integer id) throws ObjectNotFoundException {
+		buscaPorId(id);
+		try {
+			categoriaRepository.deleteById(id);
+			
+		}catch(DataIntegrityViolationException e) {
+			
+		}
+		
 	}
-
+	
 }
