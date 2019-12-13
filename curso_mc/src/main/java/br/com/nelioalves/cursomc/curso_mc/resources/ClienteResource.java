@@ -17,8 +17,6 @@ public class ClienteResource {
 	@Autowired
 	private ClienteService clienteService;
 	
-	
-	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) throws ObjectNotFoundException {
 		return ResponseEntity.ok(clienteService.buscaPorId(id));

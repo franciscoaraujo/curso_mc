@@ -30,15 +30,18 @@ public class Cliente implements Serializable {
 	private String email;
 	private String cpfOuCnpj;
 	private Integer tipo;
-	
+
 	@JsonManagedReference
 	@OneToMany(mappedBy = "cliente")
 	private Collection<Endereco> enderecos = new ArrayList<>();
-	
+
 	@ElementCollection
-	@CollectionTable(name="telefone")
+	@CollectionTable(name = "telefone")
 	private Set<String> telefones = new HashSet<>();
 	
+	@OneToMany(mappedBy = "cliente")//por quem ele foi mapeado la do outro lado da relação
+	private Collection<Pedido> pedidos = new ArrayList<>();
+
 	public Cliente() {
 	}
 
@@ -95,8 +98,7 @@ public class Cliente implements Serializable {
 		this.tipo = tipo.getCodigo();
 		return this;
 	}
-	
-	
+
 	public Collection<Endereco> getEnderecos() {
 		return enderecos;
 	}
@@ -117,12 +119,18 @@ public class Cliente implements Serializable {
 		this.tipo = tipo;
 	}
 
-	
+	public Collection<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(Collection<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
 
 	@Override
 	public String toString() {
 		return "Cliente [id=" + id + ", nome=" + nome + ", email=" + email + ", cpfOuCnpj=" + cpfOuCnpj + ", tipo="
-				+ tipo + ", enderecos=" + enderecos + ", telefones=" + telefones + "]";
+				+ tipo + ", enderecos=" + enderecos + ", telefones=" + telefones + ", pedidos=" + pedidos + "]";
 	}
 
 	@Override

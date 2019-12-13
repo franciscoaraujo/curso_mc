@@ -1,6 +1,8 @@
 package br.com.nelioalves.cursomc.curso_mc.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,23 +11,23 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Cidade implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	
-	@JsonBackReference
+
+	@JsonManagedReference
 	@ManyToOne
-	@JoinColumn(name="estado_id")
+	@JoinColumn(name = "estado_id")
 	private Estado estado;
-	
+
 	public Cidade() {
 		// TODO Auto-generated constructor stub
 	}
@@ -60,6 +62,7 @@ public class Cidade implements Serializable {
 		this.estado = estado;
 	}
 
+
 	@Override
 	public String toString() {
 		return "Cidade [id=" + id + ", nome=" + nome + ", estado=" + estado + "]";
@@ -89,7 +92,5 @@ public class Cidade implements Serializable {
 			return false;
 		return true;
 	}
-
-
 
 }
