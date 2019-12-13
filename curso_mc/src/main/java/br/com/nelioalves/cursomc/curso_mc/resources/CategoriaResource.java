@@ -1,10 +1,15 @@
 package br.com.nelioalves.cursomc.curso_mc.resources;
 
+import java.net.URI;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.nelioalves.cursomc.curso_mc.domain.Categoria;
 import br.com.nelioalves.cursomc.curso_mc.services.CategoriaService;
@@ -20,14 +25,16 @@ public class CategoriaResource {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Categoria find(@PathVariable Integer id) throws ObjectNotFoundException {
 		return service.buscaPorId(id);
-
 	}
 
-//	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity<?> save(@RequestBody Categoria categoria) throws ObjectNotFoundException {
-//		categoria = service.cadastrar(categoria);
-//		return new ResponseEntity<>(categoria, HttpStatus.CREATED);
-//	}
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<?> save(@RequestBody Categoria categoria) throws ObjectNotFoundException {
+		categoria = service.cadastrar(categoria);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(categoria.getId())
+				.toUri();
+		return  ResponseEntity.created(uri).build();
+	}
 //
 //	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 //	public ResponseEntity<Collection<Categoria>> findAll() {

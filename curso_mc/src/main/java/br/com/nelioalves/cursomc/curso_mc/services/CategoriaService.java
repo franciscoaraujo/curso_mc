@@ -24,6 +24,7 @@ public class CategoriaService implements IService<Categoria> {
 
 	@Override
 	public Categoria cadastrar(Categoria categoria) {
+		categoria.setId(null);
 		return categoriaRepository.save(categoria);
 	}
 
