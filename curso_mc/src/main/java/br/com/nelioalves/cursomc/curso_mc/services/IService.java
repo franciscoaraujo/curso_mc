@@ -13,7 +13,7 @@ public interface IService<T> {
 
 	public Collection<T> buscarTodos();
 
-	public T alterar(T t); 
+	public T alterar(T t) throws ObjectNotFoundException; 
 
 	public void excluir( T t); 
 	

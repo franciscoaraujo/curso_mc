@@ -28,11 +28,12 @@ public class CategoriaResource {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<?> save(@RequestBody Categoria categoria) throws ObjectNotFoundException {
+	public ResponseEntity<Categoria> save(@RequestBody Categoria categoria) throws ObjectNotFoundException {
 		categoria = service.cadastrar(categoria);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(categoria.getId())
 				.toUri();
+		
 		return  ResponseEntity.created(uri).build();
 	}
 //
@@ -42,11 +43,10 @@ public class CategoriaResource {
 //		return ResponseEntity.ok(categoriaCollection);
 //	}
 //
-//	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity<Categoria> alteraCategoria(@RequestBody Categoria categoria) {
-//		// fazer a verificacao para ver se a cateforia existe
-//		Categoria categoriaReturn = service.alterar(categoria);
-//		return new ResponseEntity<>(categoriaReturn, HttpStatus.CREATED);
-//	}
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Categoria> alteraCategoria(@RequestBody Categoria categoria, @PathVariable Integer id) throws ObjectNotFoundException {
+		service.alterar(categoria);
+		return ResponseEntity.noContent().build();
+	}
 
 }

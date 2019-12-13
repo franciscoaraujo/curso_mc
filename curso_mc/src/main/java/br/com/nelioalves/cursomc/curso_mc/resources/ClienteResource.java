@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.nelioalves.cursomc.curso_mc.domain.Cliente;
 import br.com.nelioalves.cursomc.curso_mc.services.ClienteService;
 import javassist.tools.rmi.ObjectNotFoundException;
 
@@ -18,7 +19,9 @@ public class ClienteResource {
 	private ClienteService clienteService;
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) throws ObjectNotFoundException {
+	public ResponseEntity<Cliente> find(@PathVariable Integer id) throws ObjectNotFoundException {
 		return ResponseEntity.ok(clienteService.buscaPorId(id));
 	}
+	
+	
 }

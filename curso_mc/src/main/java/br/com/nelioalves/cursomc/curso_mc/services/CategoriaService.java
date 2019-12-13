@@ -34,7 +34,8 @@ public class CategoriaService implements IService<Categoria> {
 	}
 
 	@Override
-	public Categoria alterar(Categoria categoria) {
+	public Categoria alterar(Categoria categoria) throws ObjectNotFoundException {
+		buscaPorId(categoria.getId());
 		return categoriaRepository.save(categoria);
 	}
 
