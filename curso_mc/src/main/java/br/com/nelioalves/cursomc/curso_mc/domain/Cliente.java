@@ -32,15 +32,14 @@ public class Cliente implements Serializable {
 	private String cpfOuCnpj;
 	private Integer tipo;
 
-	@JsonManagedReference
+
 	@OneToMany(mappedBy = "cliente")
 	private Collection<Endereco> enderecos = new ArrayList<>();
 
 	@ElementCollection
 	@CollectionTable(name = "telefone")
 	private Set<String> telefones = new HashSet<>();
-	/*-Ja está feita a permissão @JsonManagedReference na classe Pedido-*/
-	@JsonBackReference/*/*Isso eh aplicado quando temos mapeamento bidirecional com Cliente, posso serializar o Cliente de um pedido mas nao Serializar o Pedido de um cliente*/
+	
 	@OneToMany(mappedBy = "cliente")//por quem ele foi mapeado la do outro lado da relação
 	private Collection<Pedido> pedidos = new ArrayList<>();
 

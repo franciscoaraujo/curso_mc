@@ -31,7 +31,7 @@ public class Produto implements Serializable {
 	private String nome;
 	private Double preco;
 
-	@JsonBackReference /*
+	@JsonIgnore /*
 						 * Omitindo a lista de produtos, porque ja esta sendo feito no outro
 						 * relacionanto
 						 */
