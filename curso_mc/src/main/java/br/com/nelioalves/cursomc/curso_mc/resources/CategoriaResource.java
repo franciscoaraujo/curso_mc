@@ -1,6 +1,7 @@
 package br.com.nelioalves.cursomc.curso_mc.resources;
 
 import java.net.URI;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.nelioalves.cursomc.curso_mc.domain.Categoria;
+import br.com.nelioalves.cursomc.curso_mc.dto.CategoriaDTO;
 import br.com.nelioalves.cursomc.curso_mc.services.CategoriaService;
 import javassist.tools.rmi.ObjectNotFoundException;
 
@@ -50,12 +52,10 @@ public class CategoriaResource {
 		return ResponseEntity.noContent().build();
 	}
 
-//
-//	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity<Collection<Categoria>> findAll() {
-//		Collection<Categoria> categoriaCollection = service.buscarTodos();
-//		return ResponseEntity.ok(categoriaCollection);
-//	}
-//
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<Collection<CategoriaDTO>> findAll() throws ObjectNotFoundException {
+		Collection<CategoriaDTO> listCategoriaDTO = CategoriaDTO.converterToDTO(service.buscarTodos());
+		return ResponseEntity.ok().body(listCategoriaDTO);
+	}
 
 }
