@@ -3,6 +3,8 @@ package br.com.nelioalves.cursomc.curso_mc.resources;
 import java.net.URI;
 import java.util.Collection;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -32,13 +34,23 @@ public class CategoriaResource {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Categoria> save(@RequestBody Categoria categoria) throws ObjectNotFoundException {
-		categoria = service.cadastrar(categoria);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getId())
-				.toUri();
-
+	public ResponseEntity<Categoria> save(@Valid @RequestBody CategoriaDTO categoriaDTO)
+			throws ObjectNotFoundException {
+		Categoria obj = service.fromDTO(categoriaDTO);
+		obj = service.cadastrar(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> alteraCategoria(@Valid @RequestBody CategoriaDTO categoriaDTO,
+			@PathVariable Integer id) throws ObjectNotFoundException {
+		Categoria obj = service.fromDTO(categoriaDTO);
+		obj.setId(id);
+		service.alterar(obj);
+		return ResponseEntity.noContent().build();
+	}
+
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@RequestBody Categoria categoria, @PathVariable Integer id)
@@ -47,13 +59,7 @@ public class CategoriaResource {
 		return ResponseEntity.noContent().build();
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Categoria> alteraCategoria(@RequestBody Categoria categoria, @PathVariable Integer id)
-			throws ObjectNotFoundException {
-		service.alterar(categoria);
-		return ResponseEntity.noContent().build();
-	}
-
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Collection<CategoriaDTO>> findAll() throws ObjectNotFoundException {
 		Collection<CategoriaDTO> listCategoriaDTO = CategoriaDTO.converterToDTO(service.buscarTodos());

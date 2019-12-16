@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import br.com.nelioalves.cursomc.curso_mc.domain.Categoria;
+import br.com.nelioalves.cursomc.curso_mc.dto.CategoriaDTO;
 import br.com.nelioalves.cursomc.curso_mc.repositories.CategoriaRepository;
 import br.com.nelioalves.cursomc.curso_mc.services.exception.DataIntegrityException;
 import br.com.nelioalves.cursomc.curso_mc.services.exception.ObjectNotFoundException;
@@ -60,5 +61,8 @@ public class CategoriaService implements IService<Categoria> {
 		return categoriaRepository.findAll(pageRequest);
 	}
 	
+	public Categoria fromDTO(CategoriaDTO objDto) {
+		return new Categoria(objDto.getId(), objDto.getNome());
+	}
 	
 }
