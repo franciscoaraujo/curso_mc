@@ -24,7 +24,6 @@ public class ClienteService implements IService<Cliente> {
 
 	@Override
 	public Cliente cadastrar(Cliente t) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -44,7 +43,6 @@ public class ClienteService implements IService<Cliente> {
 		Cliente newObj = buscaPorId(t.getId());
 		updateDate(newObj, t);
 		return repo.save(newObj);
-
 	}
 
 	@Override
@@ -52,12 +50,11 @@ public class ClienteService implements IService<Cliente> {
 		buscaPorId(id);
 		try {
 			repo.deleteById(id);
-
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possivel excluir porque ha entidades relacionadas");
 		}
 	}
-	
+
 	public Page<Cliente> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
