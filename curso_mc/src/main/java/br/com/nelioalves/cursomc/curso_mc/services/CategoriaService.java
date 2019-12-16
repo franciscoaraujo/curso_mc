@@ -19,50 +19,49 @@ import br.com.nelioalves.cursomc.curso_mc.services.exception.ObjectNotFoundExcep
 public class CategoriaService implements IService<Categoria> {
 
 	@Autowired
-	private CategoriaRepository categoriaRepository;
+	private CategoriaRepository repo;
 
 	@Override
 	public Categoria buscaPorId(Integer id) throws ObjectNotFoundException {
-		return categoriaRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+		return repo.findById(id).orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
 
 	@Override
 	public Categoria cadastrar(Categoria categoria) {
 		categoria.setId(null);
-		return categoriaRepository.save(categoria);
-	}
-
-	@Override
-	public Collection<Categoria> buscarTodos() {
-		return categoriaRepository.findAll();
+		return repo.save(categoria);
 	}
 
 	@Override
 	public Categoria alterar(Categoria categoria) throws ObjectNotFoundException {
 		buscaPorId(categoria.getId());
-		return categoriaRepository.save(categoria);
+		return repo.save(categoria);
 	}
 
 	@Override
 	public void excluir(Integer id) throws ObjectNotFoundException {
 		buscaPorId(id);
 		try {
-			categoriaRepository.deleteById(id);
+			repo.deleteById(id);
 
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possivel excluir uma categoria que possui produtos");
 		}
+	}
 
+	@Override
+	public Collection<Categoria> buscarTodos() {
+		return repo.findAll();
 	}
-	
-	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy,String direction){
-		PageRequest pageRequest =  PageRequest.of(page, linesPerPage,Direction.valueOf(direction), orderBy);
-		return categoriaRepository.findAll(pageRequest);
+
+	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return repo.findAll(pageRequest);
 	}
-	
+
 	public Categoria fromDTO(CategoriaDTO objDto) {
 		return new Categoria(objDto.getId(), objDto.getNome());
 	}
-	
+
 }

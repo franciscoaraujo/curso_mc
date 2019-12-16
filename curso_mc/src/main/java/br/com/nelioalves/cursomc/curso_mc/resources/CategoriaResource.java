@@ -19,7 +19,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import br.com.nelioalves.cursomc.curso_mc.domain.Categoria;
 import br.com.nelioalves.cursomc.curso_mc.dto.CategoriaDTO;
 import br.com.nelioalves.cursomc.curso_mc.services.CategoriaService;
-import javassist.tools.rmi.ObjectNotFoundException;
+import br.com.nelioalves.cursomc.curso_mc.services.exception.ObjectNotFoundException;
+
 
 @RestController
 @RequestMapping(value = "/categorias")

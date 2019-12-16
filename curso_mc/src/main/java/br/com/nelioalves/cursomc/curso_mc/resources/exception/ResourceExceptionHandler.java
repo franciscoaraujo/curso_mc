@@ -41,4 +41,3 @@ public class ResourceExceptionHandler {
 	}
 
 }
-//MethodArgumentNotValidException

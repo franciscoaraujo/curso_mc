@@ -5,9 +5,7 @@ import java.util.Collection;
 
 public class ValidationError extends StandardError {
 	
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	
 	private Collection<FieldMessage> errors = new ArrayList<>();
