@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 
 import br.com.nelioalves.cursomc.curso_mc.domain.Categoria;
 import br.com.nelioalves.cursomc.curso_mc.repositories.CategoriaRepository;
-import javassist.tools.rmi.ObjectNotFoundException;
+import br.com.nelioalves.cursomc.curso_mc.services.exception.DataIntegrityException;
+import br.com.nelioalves.cursomc.curso_mc.services.exception.ObjectNotFoundException;
 
 @Service
 public class CategoriaService implements IService<Categoria> {
@@ -38,18 +39,17 @@ public class CategoriaService implements IService<Categoria> {
 		buscaPorId(categoria.getId());
 		return categoriaRepository.save(categoria);
 	}
-	
-	
+
 	@Override
 	public void excluir(Integer id) throws ObjectNotFoundException {
 		buscaPorId(id);
 		try {
 			categoriaRepository.deleteById(id);
-			
-		}catch(DataIntegrityViolationException e) {
-			
+
+		} catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possivel excluir uma categoria que possui produtos");
 		}
-		
+
 	}
-	
+
 }
