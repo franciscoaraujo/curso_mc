@@ -1,5 +1,6 @@
 package br.com.nelioalves.cursomc.curso_mc.resources;
 
+import java.net.URI;
 import java.util.Collection;
 
 import javax.validation.Valid;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.nelioalves.cursomc.curso_mc.domain.Cliente;
 import br.com.nelioalves.cursomc.curso_mc.dto.ClienteDTO;
+import br.com.nelioalves.cursomc.curso_mc.dto.ClienteNewDTO;
 import br.com.nelioalves.cursomc.curso_mc.services.ClienteService;
 import br.com.nelioalves.cursomc.curso_mc.services.exception.ObjectNotFoundException;
 
@@ -31,6 +34,17 @@ public class ClienteResource {
 		return ResponseEntity.ok(service.buscaPorId(id));
 	}
 
+	
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Cliente> save(@Valid @RequestBody ClienteNewDTO clienteNewDTO)
+			throws ObjectNotFoundException {
+		Cliente obj = service.fromDTO(clienteNewDTO);
+		obj = service.cadastrar(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).build();
+	}
+	
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> alteraCliente(@Valid @RequestBody ClienteDTO categoriaDTO, @PathVariable Integer id)
 			throws ObjectNotFoundException {
