@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import br.com.nelioalves.cursomc.curso_mc.domain.Categoria;
+import br.com.nelioalves.cursomc.curso_mc.domain.Cliente;
 import br.com.nelioalves.cursomc.curso_mc.dto.CategoriaDTO;
 import br.com.nelioalves.cursomc.curso_mc.repositories.CategoriaRepository;
 import br.com.nelioalves.cursomc.curso_mc.services.exception.DataIntegrityException;
@@ -34,9 +35,10 @@ public class CategoriaService implements IService<Categoria> {
 	}
 
 	@Override
-	public Categoria alterar(Categoria categoria) throws ObjectNotFoundException {
-		buscaPorId(categoria.getId());
-		return repo.save(categoria);
+	public Categoria alterar(Categoria t) throws ObjectNotFoundException {
+		Categoria newObj = buscaPorId(t.getId());
+		updateDate(newObj, t);
+		return repo.save(newObj);
 	}
 
 	@Override
@@ -63,5 +65,8 @@ public class CategoriaService implements IService<Categoria> {
 	public Categoria fromDTO(CategoriaDTO objDto) {
 		return new Categoria(objDto.getId(), objDto.getNome());
 	}
-
+	
+	private void updateDate(Categoria newObj, Categoria t) {
+		newObj.setNome(t.getNome());
+	}
 }

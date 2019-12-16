@@ -16,32 +16,31 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import br.com.nelioalves.cursomc.curso_mc.domain.enums.EstadoPagamento;
 
 @Entity
-@Inheritance(strategy =  InheritanceType.JOINED)/*Mapeamento de heranca com PagamentoComBoleto e PagamentoComCartao*/
-public abstract class Pagamento implements Serializable{
-	
+@Inheritance(strategy = InheritanceType.JOINED) /* Mapeamento de heranca com PagamentoComBoleto e PagamentoComCartao */
+public abstract class Pagamento implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	private Integer id;
 	private Integer estado;
-	
+
 	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name = "pedido_id")
 	@MapsId
 	private Pedido pedido;
-	
-	
+
 	public Pagamento() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
 		super();
 		this.id = id;
-		this.estado = estado.getCodigo();
+		this.estado = (this.estado == null) ? null : estado.getCodigo();
 		this.pedido = pedido;
-		
+
 	}
 
 	public Integer getId() {
@@ -98,7 +97,4 @@ public abstract class Pagamento implements Serializable{
 		return true;
 	}
 
-	
-	
-	
 }
