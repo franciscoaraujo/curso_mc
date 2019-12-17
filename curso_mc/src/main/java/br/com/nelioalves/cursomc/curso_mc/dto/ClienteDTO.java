@@ -11,7 +11,9 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.data.domain.Page;
 
 import br.com.nelioalves.cursomc.curso_mc.domain.Cliente;
+import br.com.nelioalves.cursomc.curso_mc.services.validation.ClienteUpdate;
 
+@ClienteUpdate
 public class ClienteDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
