@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -31,16 +32,15 @@ public class Cliente implements Serializable {
 	private String cpfOuCnpj;
 	private Integer tipo;
 
-
-	@OneToMany(mappedBy = "cliente")
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private Collection<Endereco> enderecos = new ArrayList<>();
 
 	@ElementCollection
 	@CollectionTable(name = "telefone")
 	private Set<String> telefones = new HashSet<>();
-	
+
 	@JsonIgnore
-	@OneToMany(mappedBy = "cliente")//por quem ele foi mapeado la do outro lado da relação
+	@OneToMany(mappedBy = "cliente") // por quem ele foi mapeado la do outro lado da relação
 	private Collection<Pedido> pedidos = new ArrayList<>();
 
 	public Cliente() {
@@ -51,7 +51,7 @@ public class Cliente implements Serializable {
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
-		this.tipo = (tipo==null) ? null : tipo.getCodigo();
+		this.tipo = (tipo == null) ? null : tipo.getCodigo();
 	}
 
 	public Integer getId() {
