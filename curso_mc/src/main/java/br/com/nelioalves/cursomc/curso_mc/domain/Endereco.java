@@ -2,7 +2,6 @@ package br.com.nelioalves.cursomc.curso_mc.domain;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
