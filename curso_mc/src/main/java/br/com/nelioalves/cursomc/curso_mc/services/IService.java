@@ -9,7 +9,7 @@ public interface IService<T> {
 
 	public T buscaPorId(Integer t) throws ObjectNotFoundException; 
 
-	public T cadastrar(T t);
+	public T cadastrar(T t) throws ObjectNotFoundException;
 
 	public Collection<T> buscarTodos();
 

@@ -32,20 +32,18 @@ public class Pedido implements Serializable {
 	private Date instantDate;
 
 	/* Mapeamento bidirecional 1 pra 1 */
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido") // Evitando erro de entidade transiente quando for salvar
-																// o pedido e o pagamento
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido") // Evitando erro de entidade transiente quando for salvar o pedido e o pagamento
 	private Pagamento pagamento;
-
+	
 	@ManyToOne
-	@JoinColumn(name = "_id")
+	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 
 	@ManyToOne
 	@JoinColumn(name = "endereco_de_entrega_id")
 	private Endereco enderecoDeEntraga;
 
-	@OneToMany(mappedBy = "id.pedido") // informando quem mapeou do outro lado que foi o objeto id.pedido - Aqui tem
-										// que ser OnetoMany
+	@OneToMany(mappedBy = "id.pedido") // informando quem mapeou do outro lado que foi o objeto id.pedido - Aqui tem que ser OnetoMany
 	private Set<ItemPedido> itens = new HashSet<>();
 
 	public Pedido() {

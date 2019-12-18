@@ -13,7 +13,7 @@ import br.com.nelioalves.cursomc.curso_mc.domain.Categoria;
 import br.com.nelioalves.cursomc.curso_mc.domain.Produto;
 import br.com.nelioalves.cursomc.curso_mc.repositories.CategoriaRepository;
 import br.com.nelioalves.cursomc.curso_mc.repositories.ProdutoRepository;
-import javassist.tools.rmi.ObjectNotFoundException;
+import br.com.nelioalves.cursomc.curso_mc.services.exception.ObjectNotFoundException;
 
 @Service
 public class ProdutoService implements IService<Produto> {

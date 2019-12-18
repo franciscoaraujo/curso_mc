@@ -1,46 +1,83 @@
 package br.com.nelioalves.cursomc.curso_mc.services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import br.com.nelioalves.cursomc.curso_mc.domain.ItemPedido;
+import br.com.nelioalves.cursomc.curso_mc.domain.PagamentoComBoleto;
 import br.com.nelioalves.cursomc.curso_mc.domain.Pedido;
+import br.com.nelioalves.cursomc.curso_mc.domain.enums.EstadoPagamento;
+import br.com.nelioalves.cursomc.curso_mc.repositories.ItemPedidoRepository;
+import br.com.nelioalves.cursomc.curso_mc.repositories.PagamentoRepository;
 import br.com.nelioalves.cursomc.curso_mc.repositories.PedidoRepository;
-import javassist.tools.rmi.ObjectNotFoundException;
+import br.com.nelioalves.cursomc.curso_mc.services.exception.ObjectNotFoundException;
 
 @Service
 public class PedidoService implements IService<Pedido> {
 
 	@Autowired
-	private PedidoRepository pedidoRepository;
+	private PedidoRepository repo;
+	
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
+
+	@Autowired
+	private BoletoService boletoService;
+
+	@Autowired
+	private ProdutoService ProdutoService;
+
+	@Autowired
+	ItemPedidoRepository ItemPedidoRepository;
 
 	@Override
 	public Pedido buscaPorId(Integer id) throws ObjectNotFoundException {
-		return pedidoRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+		return repo.findById(id).orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
 	}
 
 	@Override
-	public Pedido cadastrar(Pedido pedido) {
-		return pedidoRepository.save(pedido);
+	@Transactional
+	public Pedido cadastrar(Pedido obj) throws ObjectNotFoundException {
+		obj.setId(null);
+		obj.setInstantDate(new Date());
+		obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
+		obj.getPagamento().setPedido(obj);
+
+		if (obj.getPagamento() instanceof PagamentoComBoleto) {
+			PagamentoComBoleto pagto = (PagamentoComBoleto) obj.getPagamento();
+			boletoService.preencherPagamentoComBoleto(pagto, obj.getInstantDate());
+		}
+		obj = repo.save(obj);
+		pagamentoRepository.save(obj.getPagamento());
+		for (ItemPedido ip : obj.getItens()) {
+			ip.setDesconto(0.0);
+			ip.setPreco(ProdutoService.buscaPorId(ip.getProduto().getId()).getPreco());
+			ip.setPedido(obj);
+		}
+		ItemPedidoRepository.saveAll(obj.getItens());
+		return obj;
+
 	}
 
 	@Override
 	public Collection<Pedido> buscarTodos() {
-		return pedidoRepository.findAll();
+		return repo.findAll();
 	}
 
 	@Override
 	public Pedido alterar(Pedido pedido) {
-		return pedidoRepository.save(pedido);
+		return repo.save(pedido);
 	}
 
-	
 	@Override
 	public void excluir(Integer t) throws ObjectNotFoundException {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 }

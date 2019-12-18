@@ -28,10 +28,9 @@ public class Cliente implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-	@Column(unique = true)
 	private String nome;
 	
+	//@Column(unique=true)
 	private String email;
 	private String cpfOuCnpj;
 	private Integer tipo;
@@ -70,7 +69,7 @@ public class Cliente implements Serializable {
 	public String getNome() {
 		return nome;
 	}
-
+	
 	public Cliente setNome(String nome) {
 		this.nome = nome;
 		return this;
@@ -98,9 +97,9 @@ public class Cliente implements Serializable {
 		return TipoCliente.toEnum(tipo);
 	}
 
-	public Cliente setTipo(TipoCliente tipo) {
+	public void setTipo(TipoCliente tipo) {
 		this.tipo = tipo.getCodigo();
-		return this;
+		
 	}
 
 	public Collection<Endereco> getEnderecos() {
@@ -117,10 +116,6 @@ public class Cliente implements Serializable {
 
 	public void setTelefones(Set<String> telefones) {
 		this.telefones = telefones;
-	}
-
-	public void setTipo(Integer tipo) {
-		this.tipo = tipo;
 	}
 
 	public Collection<Pedido> getPedidos() {

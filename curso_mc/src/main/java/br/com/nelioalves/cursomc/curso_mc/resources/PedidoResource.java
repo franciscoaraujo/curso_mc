@@ -1,15 +1,22 @@
 package br.com.nelioalves.cursomc.curso_mc.resources;
 
+import java.net.URI;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.nelioalves.cursomc.curso_mc.domain.Pedido;
 import br.com.nelioalves.cursomc.curso_mc.services.PedidoService;
-import javassist.tools.rmi.ObjectNotFoundException;
+import br.com.nelioalves.cursomc.curso_mc.services.exception.ObjectNotFoundException;
 
 @RestController
 @RequestMapping(value = "/pedidos")
@@ -24,6 +31,15 @@ public class PedidoResource {
 
 	}
 
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<Void> insert(@Valid @RequestBody Pedido obj) {
+		obj = service.cadastrar(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).build();
+	}
+	
+//
 //	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 //	public ResponseEntity<?> save(@RequestBody Pedido Pedido) throws ObjectNotFoundException {
 //		Pedido = service.cadastrar(Pedido);
