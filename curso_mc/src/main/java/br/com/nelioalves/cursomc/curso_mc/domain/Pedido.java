@@ -27,16 +27,15 @@ public class Pedido implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	@JsonFormat(pattern = "dd/MM/yyyy : HH:mm")
 	private Date instantDate;
-	
-	
+
 	/* Mapeamento bidirecional 1 pra 1 */
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido") // Evitando erro de entidade transiente quando for salvar o pedido e o pagamento
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido") // Evitando erro de entidade transiente quando for salvar
+																// o pedido e o pagamento
 	private Pagamento pagamento;
 
-	
 	@ManyToOne
 	@JoinColumn(name = "_id")
 	private Cliente cliente;
@@ -44,12 +43,21 @@ public class Pedido implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "endereco_de_entrega_id")
 	private Endereco enderecoDeEntraga;
-	
-	@OneToMany(mappedBy = "id.pedido") // informando quem mapeou do outro lado que foi o objeto id.pedido -  Aqui tem que ser OnetoMany
+
+	@OneToMany(mappedBy = "id.pedido") // informando quem mapeou do outro lado que foi o objeto id.pedido - Aqui tem
+										// que ser OnetoMany
 	private Set<ItemPedido> itens = new HashSet<>();
 
 	public Pedido() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public Double getValorTotal() {
+		Double soma = 0.0;
+		for (ItemPedido itemPedido : itens) {
+			soma += itemPedido.getSubTotal();
+		}
+		return soma;
 	}
 
 	public Pedido(Integer id, Date instantDate, Cliente cliente, Endereco enderecoDeEntraga) {
