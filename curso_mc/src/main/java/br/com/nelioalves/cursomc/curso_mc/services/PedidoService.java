@@ -29,10 +29,13 @@ public class PedidoService implements IService<Pedido> {
 	private BoletoService boletoService;
 
 	@Autowired
-	private ProdutoService ProdutoService;
+	private ProdutoService produtoService;
 
 	@Autowired
 	ItemPedidoRepository ItemPedidoRepository;
+	
+	@Autowired
+	private ClienteService clienteService;
 
 	@Override
 	public Pedido buscaPorId(Integer id) throws ObjectNotFoundException {
@@ -45,6 +48,7 @@ public class PedidoService implements IService<Pedido> {
 	public Pedido cadastrar(Pedido obj) throws ObjectNotFoundException {
 		obj.setId(null);
 		obj.setInstantDate(new Date());
+		obj.setCliente(clienteService.buscaPorId(obj.getCliente().getId()));
 		obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
 		obj.getPagamento().setPedido(obj);
 
@@ -56,14 +60,17 @@ public class PedidoService implements IService<Pedido> {
 		pagamentoRepository.save(obj.getPagamento());
 		for (ItemPedido ip : obj.getItens()) {
 			ip.setDesconto(0.0);
-			ip.setPreco(ProdutoService.buscaPorId(ip.getProduto().getId()).getPreco());
+			ip.setProduto((produtoService.buscaPorId(ip.getProduto().getId())));
+			ip.setPreco(ip.getProduto().getPreco());
 			ip.setPedido(obj);
 		}
 		ItemPedidoRepository.saveAll(obj.getItens());
+		
+		System.out.println(obj);
 		return obj;
 
 	}
-
+	
 	@Override
 	public Collection<Pedido> buscarTodos() {
 		return repo.findAll();

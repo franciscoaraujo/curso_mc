@@ -1,6 +1,9 @@
 package br.com.nelioalves.cursomc.curso_mc.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -89,4 +92,20 @@ public class ItemPedido implements Serializable {
 		return (preco - desconto) * quantidade;
 	}
 
+	@Override
+	public String toString() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		StringBuilder builder = new StringBuilder();
+		builder.append(getProduto().getNome())
+		.append(", Qte: ").append(getQuantidade())
+		.append(", Preço unitário: ")
+		.append(nf.format(getPreco()))
+		.append(", Subtotal ")
+		.append(nf.format(getSubTotal()))
+		.append("\n");
+			
+		return builder.toString();
+	}
+	
+	
 }
