@@ -21,7 +21,7 @@ public class PedidoService implements IService<Pedido> {
 
 	@Autowired
 	private PedidoRepository repo;
-	
+
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
 
@@ -33,9 +33,12 @@ public class PedidoService implements IService<Pedido> {
 
 	@Autowired
 	ItemPedidoRepository ItemPedidoRepository;
-	
+
 	@Autowired
 	private ClienteService clienteService;
+
+	@Autowired
+	private EmailService emailService;
 
 	@Override
 	public Pedido buscaPorId(Integer id) throws ObjectNotFoundException {
@@ -65,12 +68,11 @@ public class PedidoService implements IService<Pedido> {
 			ip.setPedido(obj);
 		}
 		ItemPedidoRepository.saveAll(obj.getItens());
-		
-		System.out.println(obj);
+		emailService.sendOrderConfirmationEmail(obj);
 		return obj;
 
 	}
-	
+
 	@Override
 	public Collection<Pedido> buscarTodos() {
 		return repo.findAll();
