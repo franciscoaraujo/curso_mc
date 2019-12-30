@@ -29,8 +29,8 @@ public class Cliente implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	
-	//@Column(unique=true)
+
+	// @Column(unique=true)
 	private String email;
 	private String cpfOuCnpj;
 	private Integer tipo;
@@ -46,15 +46,19 @@ public class Cliente implements Serializable {
 	@OneToMany(mappedBy = "cliente") // por quem ele foi mapeado la do outro lado da relação
 	private Collection<Pedido> pedidos = new ArrayList<>();
 
+	@JsonIgnore
+	private String senha;
+
 	public Cliente() {
 	}
 
-	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
+	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
 		this.tipo = (tipo == null) ? null : tipo.getCodigo();
+		this.senha = senha;
 	}
 
 	public Integer getId() {
@@ -69,7 +73,7 @@ public class Cliente implements Serializable {
 	public String getNome() {
 		return nome;
 	}
-	
+
 	public Cliente setNome(String nome) {
 		this.nome = nome;
 		return this;
@@ -99,7 +103,7 @@ public class Cliente implements Serializable {
 
 	public void setTipo(TipoCliente tipo) {
 		this.tipo = tipo.getCodigo();
-		
+
 	}
 
 	public Collection<Endereco> getEnderecos() {
@@ -124,6 +128,18 @@ public class Cliente implements Serializable {
 
 	public void setPedidos(Collection<Pedido> pedidos) {
 		this.pedidos = pedidos;
+	}
+
+	public void setTipo(Integer tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	@Override
