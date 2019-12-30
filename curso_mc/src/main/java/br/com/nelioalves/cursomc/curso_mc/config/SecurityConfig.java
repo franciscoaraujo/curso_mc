@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	public static final String[] PUBLIC_MATCHERS = {"h2-console"};
 	
-	public static final String[] PUBLIC_MATCHERS_GET = { "/produtos/**", "/categorias/**" };//recupero produtos e categorias mas nao posso altera-los
+	public static final String[] PUBLIC_MATCHERS_GET = { "/produtos/**", "/categorias/**", "/clientes/**" };//recupero produtos e categorias mas nao posso altera-los
 	
 	
 	@Override
