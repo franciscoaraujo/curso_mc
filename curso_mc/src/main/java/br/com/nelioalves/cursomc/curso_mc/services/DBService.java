@@ -124,7 +124,7 @@ public class DBService {
 		cidadeRepository.saveAll(Arrays.asList(cidadeRibeiraoPreto, cidadePassos));
 
 		/* Criando cliente e associando endereco */
-		Cliente cli = new Cliente(null, "Maria Silval", "chicoaraujo1063@gmail.com", "1923194843", TipoCliente.PESSOAFISICA);
+		Cliente cli = new Cliente(null, "Francisco Araujo", "chicoaraujo1063@gmail.com", "1923194843", TipoCliente.PESSOAFISICA);
 		cli.getTelefones().addAll(Arrays.asList("112222", "222333"));
 		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "14058002", cli,
 				cidadeRibeiraoPreto);
