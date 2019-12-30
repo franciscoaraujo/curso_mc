@@ -14,6 +14,7 @@ import br.com.nelioalves.cursomc.curso_mc.domain.enums.EstadoPagamento;
 import br.com.nelioalves.cursomc.curso_mc.repositories.ItemPedidoRepository;
 import br.com.nelioalves.cursomc.curso_mc.repositories.PagamentoRepository;
 import br.com.nelioalves.cursomc.curso_mc.repositories.PedidoRepository;
+import br.com.nelioalves.cursomc.curso_mc.services.email.EmailService;
 import br.com.nelioalves.cursomc.curso_mc.services.exception.ObjectNotFoundException;
 
 @Service

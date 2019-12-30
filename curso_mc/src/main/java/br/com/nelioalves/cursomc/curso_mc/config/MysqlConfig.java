@@ -9,8 +9,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import br.com.nelioalves.cursomc.curso_mc.services.DBService;
-import br.com.nelioalves.cursomc.curso_mc.services.EmailService;
-import br.com.nelioalves.cursomc.curso_mc.services.MockEmailService;
+import br.com.nelioalves.cursomc.curso_mc.services.email.EmailService;
+import br.com.nelioalves.cursomc.curso_mc.services.email.MockEmailService;
+import br.com.nelioalves.cursomc.curso_mc.services.email.SmtpEmailService;
 
 @Configuration
 @Profile("mysql")
@@ -28,15 +29,14 @@ public class MysqlConfig {
 		if (!"create".equals(strategy)) {
 			return false;
 		}
-
 		dbService.instatiateTestDatabase();
 
 		return true;
-
 	}
 
-	@Bean /*Será disponivel como componente*/
+	@Bean
 	public EmailService emailService() {
-		return new MockEmailService();
+		return new SmtpEmailService();
 	}
+
 }
