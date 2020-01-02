@@ -23,7 +23,7 @@ public abstract class Pagamento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private Integer id;
+	private Long id;
 	private Integer estado;
 
 	@JsonIgnore
@@ -36,7 +36,7 @@ public abstract class Pagamento implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
+	public Pagamento(Long id, EstadoPagamento estado, Pedido pedido) {
 		super();
 		this.id = id;
 		this.estado = (this.estado == null) ? null : estado.getCodigo();
@@ -44,11 +44,11 @@ public abstract class Pagamento implements Serializable {
 
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

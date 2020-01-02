@@ -4,9 +4,13 @@ import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.nelioalves.cursomc.curso_mc.domain.Cliente;
 import br.com.nelioalves.cursomc.curso_mc.domain.ItemPedido;
 import br.com.nelioalves.cursomc.curso_mc.domain.PagamentoComBoleto;
 import br.com.nelioalves.cursomc.curso_mc.domain.Pedido;
@@ -14,7 +18,9 @@ import br.com.nelioalves.cursomc.curso_mc.domain.enums.EstadoPagamento;
 import br.com.nelioalves.cursomc.curso_mc.repositories.ItemPedidoRepository;
 import br.com.nelioalves.cursomc.curso_mc.repositories.PagamentoRepository;
 import br.com.nelioalves.cursomc.curso_mc.repositories.PedidoRepository;
+import br.com.nelioalves.cursomc.curso_mc.security.UserSS;
 import br.com.nelioalves.cursomc.curso_mc.services.email.EmailService;
+import br.com.nelioalves.cursomc.curso_mc.services.exception.AuthorizationException;
 import br.com.nelioalves.cursomc.curso_mc.services.exception.ObjectNotFoundException;
 
 @Service
@@ -69,13 +75,20 @@ public class PedidoService implements IService<Pedido> {
 			ip.setPedido(obj);
 		}
 		ItemPedidoRepository.saveAll(obj.getItens());
-		
-		//emailService.sendOrderConfirmationEmail(obj);
-		
 		emailService.sendOrderConfirmationHtmlEmail(obj);
 		
 		return obj;
 
+	}
+
+	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Cliente cliente = clienteService.buscaPorId(user.getId());
+		return repo.findByCliente(cliente, pageRequest);
 	}
 
 	@Override
