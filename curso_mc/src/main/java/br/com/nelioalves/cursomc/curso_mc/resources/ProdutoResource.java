@@ -29,25 +29,6 @@ public class ProdutoResource {
 		return ResponseEntity.ok().body(service.buscaPorId(id));
 	}
 
-//	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity<?> save(@RequestBody Pedido Pedido) throws ObjectNotFoundException {
-//		Pedido = service.cadastrar(Pedido);
-//		return new ResponseEntity<>(Pedido, HttpStatus.CREATED);
-//	}
-//
-//	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity<Collection<Pedido>> findAll() {
-//		Collection<Pedido> PedidoCollection = service.buscarTodos();
-//		return ResponseEntity.ok(PedidoCollection);
-//	}
-//
-//	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity<Pedido> alteraPedido(@RequestBody Pedido Pedido) {
-//		// fazer a verificacao para ver se a cateforia existe
-//		Pedido PedidoReturn = service.alterar(Pedido);
-//		return new ResponseEntity<>(PedidoReturn, HttpStatus.CREATED);
-//	}
-
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<ProdutoDTO>> getFindPage(
 			@RequestParam(value = "nome", defaultValue = "") String nome,
