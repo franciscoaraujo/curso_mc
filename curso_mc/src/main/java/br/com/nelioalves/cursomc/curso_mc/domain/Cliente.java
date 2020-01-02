@@ -29,7 +29,7 @@ public class Cliente implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 	private String nome;
 
 	// @Column(unique=true)
@@ -60,21 +60,21 @@ public class Cliente implements Serializable {
 		
 	}
 
-	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
+	public Cliente(Long id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
 		this.tipo = (tipo == null) ? null : tipo.getCodigo();
 		this.senha = senha;
-		addPerfil(Perfil.CLIENTE);;//por padrao ja vai ser criado um perfil de cliente
+		addPerfil(Perfil.CLIENTE);//por padrao ja vai ser criado um perfil de cliente
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public Cliente setId(Integer id) {
+	public Cliente setId(Long id) {
 		this.id = id;
 		return this;
 	}

@@ -7,7 +7,7 @@ import javassist.tools.rmi.ObjectNotFoundException;
 
 public interface IService<T> {
 
-	public T buscaPorId(Integer t) throws ObjectNotFoundException; 
+	public T buscaPorId(Long t) throws ObjectNotFoundException; 
 
 	public T cadastrar(T t) throws ObjectNotFoundException;
 
@@ -16,6 +16,6 @@ public interface IService<T> {
 	public T alterar(T t) throws ObjectNotFoundException; 
 
 	
-	public void excluir( Integer  t) throws ObjectNotFoundException; 
+	public void excluir( Long  t) throws ObjectNotFoundException; 
 	
 }

@@ -48,17 +48,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	};
 	
 	public static final String[] PUBLIC_MATCHERS_POST = { 
-			"/produtos/**",
+			"/clientes/**"
 	};
 	
-	@Override
+	@Override/*Autorizacao de acessos de acordo com os vetores*/
 	protected void configure(HttpSecurity http) throws Exception {
-		
 		/*pra acessar o H2 pelo navegador*/
 		if(Arrays.asList(environment.getActiveProfiles()).contains("test")) {
 			http.headers().frameOptions().disable();
 		}
-		
 		http.cors().and().csrf().disable();
 		http.authorizeRequests()
 		.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_POST).permitAll()

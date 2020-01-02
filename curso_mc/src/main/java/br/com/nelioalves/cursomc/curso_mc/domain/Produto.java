@@ -27,7 +27,7 @@ public class Produto implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 	private String nome;
 	private Double preco;
 
@@ -47,7 +47,7 @@ public class Produto implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Produto(Integer id, String nome, Double preco) {
+	public Produto(Long id, String nome, Double preco) {
 		this.id = id;
 		this.nome = nome;
 		this.preco = preco;
@@ -62,11 +62,11 @@ public class Produto implements Serializable {
 		return pedidos;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public Produto setId(Integer id) {
+	public Produto setId(Long id) {
 		this.id = id;
 		return this;
 	}

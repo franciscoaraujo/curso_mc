@@ -31,7 +31,7 @@ public class ClienteResource {
 	private ClienteService service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Cliente> find(@PathVariable Integer id) {
+	public ResponseEntity<Cliente> find(@PathVariable Long id) {
 		return ResponseEntity.ok(service.buscaPorId(id));
 	}
 
@@ -47,7 +47,7 @@ public class ClienteResource {
 	
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> alteraCliente(@Valid @RequestBody ClienteDTO categoriaDTO, @PathVariable Integer id)
+	public ResponseEntity<Void> alteraCliente(@Valid @RequestBody ClienteDTO categoriaDTO, @PathVariable Long id)
 			throws ObjectNotFoundException {
 		Cliente obj = service.fromDTO(categoriaDTO);
 		obj.setId(id);
@@ -57,7 +57,7 @@ public class ClienteResource {
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id)
+	public ResponseEntity<Void> delete(@PathVariable Long id)
 			throws ObjectNotFoundException {
 		service.excluir(id);
 		return ResponseEntity.noContent().build();

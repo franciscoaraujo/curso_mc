@@ -10,9 +10,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import br.com.nelioalves.cursomc.curso_mc.domain.enums.Perfil;
 
-
 /**
- * Class de Usuario conforme o contrato do Spring Security (Implements UserDatails)
+ * Class de Usuario conforme o contrato do Spring Security (Implements
+ * UserDatails)
+ * 
  * @author foaj
  *
  */
@@ -20,7 +21,7 @@ public class UserSS implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 
-	private Integer id;
+	private Long id;
 	private String email;
 	private String senha;
 	private Collection<? extends GrantedAuthority> authorities;
@@ -29,7 +30,7 @@ public class UserSS implements UserDetails {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserSS(Integer id, String email, String senha, Set<Perfil> perfis) {
+	public UserSS(Long id, String email, String senha, Set<Perfil> perfis) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -38,7 +39,7 @@ public class UserSS implements UserDetails {
 				.collect(Collectors.toList());
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -75,6 +76,11 @@ public class UserSS implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	/* Testando se o usuario possui um tipo de perfil */
+	public boolean hasRole(Perfil perfil) {
+		return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getDescricao()));
 	}
 
 }

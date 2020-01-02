@@ -25,7 +25,7 @@ public class ProdutoService implements IService<Produto> {
 	private CategoriaRepository categoriaRepository;
 
 	@Override
-	public Produto buscaPorId(Integer id) throws ObjectNotFoundException {
+	public Produto buscaPorId(Long id) throws ObjectNotFoundException {
 		return repo.findById(id).orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Produto.class.getName()));
 	}
@@ -46,10 +46,10 @@ public class ProdutoService implements IService<Produto> {
 	}
 
 	@Override
-	public void excluir(Integer t) throws ObjectNotFoundException {
+	public void excluir(Long t) throws ObjectNotFoundException {
 	}
 
-	public Page<Produto> search(String nome, List<Integer> ids, Integer page, Integer linesPerPage, String orderBy,
+	public Page<Produto> search(String nome, List<Long> ids, Integer page, Integer linesPerPage, String orderBy,
 			String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		List<Categoria> categorias = categoriaRepository.findAllById(ids);

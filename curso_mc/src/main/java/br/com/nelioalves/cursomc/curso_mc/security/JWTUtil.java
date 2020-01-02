@@ -26,7 +26,7 @@ public class JWTUtil {
 	}
 	
 	public boolean tokenValido(String token) {
-		Claims claims = getClaims(token);// reivindicando o usuairo pelo token
+		Claims claims = getClaims(token);// reivindicando o usuario pelo token
 		if (claims != null) {
 			String username = claims.getSubject();
 			Date expirationDate = claims.getExpiration();
@@ -38,6 +38,15 @@ public class JWTUtil {
 		return false;
 	}
 
+	public String getUserName(String token) {
+		Claims claims = getClaims(token);// reivindicando o usuario pelo token
+		if (claims != null) {
+			return claims.getSubject();
+		}
+		return null;
+	}
+	
+
 	/* Aqui esta reivindicando o usuario e o tempo de expiracao */
 	private Claims getClaims(String token) {
 		try {
@@ -46,14 +55,6 @@ public class JWTUtil {
 			return null;
 		}
 
-	}
-
-	public String getUserName(String token) {
-		Claims claims = getClaims(token);// reivindicando o usuario pelo token
-		if (claims != null) {
-			return claims.getSubject();
-		}
-		return null;
 	}
 
 }

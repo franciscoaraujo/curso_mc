@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.nelioalves.cursomc.curso_mc.domain.Cliente;
 
 @Repository
-public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
+public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
 	/* fazer busca por email, o framework vai criar essa busca automaticamente */
 	@Transactional(readOnly = true)

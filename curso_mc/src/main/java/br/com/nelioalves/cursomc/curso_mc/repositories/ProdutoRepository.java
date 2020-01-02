@@ -14,7 +14,7 @@ import br.com.nelioalves.cursomc.curso_mc.domain.Categoria;
 import br.com.nelioalves.cursomc.curso_mc.domain.Produto;
 
 @Repository
-public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
+public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
 	// https://docs.spring.io/spring-data/jpa/docs/current/reference/html/
 	@Transactional

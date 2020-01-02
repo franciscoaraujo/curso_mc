@@ -23,7 +23,7 @@ public class Categoria implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	//@GeneratedValue(generator = "question_generator") //Caso eu utilize o Postgres!!
 	//@SequenceGenerator(name = "question_generator", sequenceName = "question_sequence", initialValue = 1)
-	private Integer id;
+	private Long id;
 	private String nome;
 	
 	
@@ -35,17 +35,17 @@ public class Categoria implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Categoria(Integer id, String nome) {
+	public Categoria(Long id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}
 	
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

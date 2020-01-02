@@ -42,7 +42,7 @@ public class PedidoService implements IService<Pedido> {
 	private EmailService emailService;
 
 	@Override
-	public Pedido buscaPorId(Integer id) throws ObjectNotFoundException {
+	public Pedido buscaPorId(Long id) throws ObjectNotFoundException {
 		return repo.findById(id).orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
 	}
@@ -89,7 +89,7 @@ public class PedidoService implements IService<Pedido> {
 	}
 
 	@Override
-	public void excluir(Integer t) throws ObjectNotFoundException {
+	public void excluir(Long t) throws ObjectNotFoundException {
 		// TODO Auto-generated method stub
 
 	}

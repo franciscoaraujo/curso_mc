@@ -23,7 +23,7 @@ public class CategoriaService implements IService<Categoria> {
 	private CategoriaRepository repo;
 
 	@Override
-	public Categoria buscaPorId(Integer id) throws ObjectNotFoundException {
+	public Categoria buscaPorId(Long id) throws ObjectNotFoundException {
 		return repo.findById(id).orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
@@ -42,7 +42,7 @@ public class CategoriaService implements IService<Categoria> {
 	}
 
 	@Override
-	public void excluir(Integer id) throws ObjectNotFoundException {
+	public void excluir(Long id) throws ObjectNotFoundException {
 		buscaPorId(id);
 		try {
 			repo.deleteById(id);

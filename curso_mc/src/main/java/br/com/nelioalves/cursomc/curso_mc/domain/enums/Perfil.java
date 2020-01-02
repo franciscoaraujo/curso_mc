@@ -3,7 +3,7 @@ package br.com.nelioalves.cursomc.curso_mc.domain.enums;
 public enum Perfil {
 
 	ADMIN(1, "ROLE_ADMIN"), 
-	CLIENTE(2, "ROLA_CLIENTE");
+	CLIENTE(2, "ROLE_CLIENTE");
 	
 	private int codigo;
 	private String descricao;

@@ -31,7 +31,7 @@ public class CategoriaResource {
 	private CategoriaService service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public Categoria find(@PathVariable Integer id) throws ObjectNotFoundException {
+	public Categoria find(@PathVariable Long id) throws ObjectNotFoundException {
 		return service.buscaPorId(id);
 	}
 
@@ -48,7 +48,7 @@ public class CategoriaResource {
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> alteraCategoria(@Valid @RequestBody CategoriaDTO categoriaDTO,
-			@PathVariable Integer id) throws ObjectNotFoundException {
+			@PathVariable Long id) throws ObjectNotFoundException {
 		Categoria obj = service.fromDTO(categoriaDTO);
 		obj.setId(id);
 		service.alterar(obj);
@@ -57,7 +57,7 @@ public class CategoriaResource {
 
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@RequestBody Categoria categoria, @PathVariable Integer id)
+	public ResponseEntity<Void> delete(@RequestBody Categoria categoria, @PathVariable Long id)
 			throws ObjectNotFoundException {
 		service.excluir(id);
 		return ResponseEntity.noContent().build();

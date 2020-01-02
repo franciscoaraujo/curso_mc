@@ -25,7 +25,7 @@ public class ProdutoResource {
 	private ProdutoService service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Produto> find(@PathVariable Integer id) throws ObjectNotFoundException {
+	public ResponseEntity<Produto> find(@PathVariable Long id) throws ObjectNotFoundException {
 		return ResponseEntity.ok().body(service.buscaPorId(id));
 	}
 
@@ -38,7 +38,7 @@ public class ProdutoResource {
 			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) throws ObjectNotFoundException {
 		
-		List<Integer> ids = URL.decodeIntList(categorias);
+		List<Long> ids = URL.decodeLongList(categorias);
 		String nomeDecoded = URL.decodeParam(nome);
 		
 		Page<Produto> pageProduto = service.search(nomeDecoded, ids, page, linesPerPage, orderBy, direction);
