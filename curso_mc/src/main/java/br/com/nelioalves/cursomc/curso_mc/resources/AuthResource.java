@@ -38,5 +38,6 @@ public class AuthResource {
 	public ResponseEntity<Void> forgot(@Valid @RequestBody EmailDTO objDto) {
 		service.sendNewPasswordEmail(objDto.getEmail());
 		return ResponseEntity.noContent().build();
+		
 	}
 }
