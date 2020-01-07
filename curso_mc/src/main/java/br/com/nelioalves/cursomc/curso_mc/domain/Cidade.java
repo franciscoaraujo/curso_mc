@@ -1,18 +1,13 @@
 package br.com.nelioalves.cursomc.curso_mc.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Cidade implements Serializable {
@@ -21,7 +16,7 @@ public class Cidade implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 	private String nome;
 
 	
@@ -33,17 +28,17 @@ public class Cidade implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Cidade(Integer id, String nome) {
+	public Cidade(Long id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

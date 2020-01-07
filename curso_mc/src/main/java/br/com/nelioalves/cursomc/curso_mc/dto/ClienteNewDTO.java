@@ -9,10 +9,11 @@ import org.hibernate.validator.constraints.Length;
 
 import br.com.nelioalves.cursomc.curso_mc.services.validation.ClienteInsert;
 
-@ClienteInsert
+@ClienteInsert//essa anotacao faz a verificação de tipo de cliente se eh fisico ou juridico
 public class ClienteNewDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
 	
 	@NotEmpty(message = "Preechimento obrigatório")
 	@Length(min = 5, max = 120, message = "O tamanho deve ser entre 5 e 120 caracteres")
@@ -42,7 +43,7 @@ public class ClienteNewDTO implements Serializable {
 	@NotEmpty(message = "Preechimento obrigatório")
 	private String cep;
 	
-	private Integer cidadeId;
+	private Long cidadeId;
 	
 	@NotEmpty(message = "Preechimento obrigatório")
 	private String telefone1;
@@ -153,11 +154,11 @@ public class ClienteNewDTO implements Serializable {
 		this.telefone3 = telefone3;
 	}
 
-	public Integer getCidadeId() {
+	public Long getCidadeId() {
 		return cidadeId;
 	}
 
-	public void setCidadeId(Integer cidadeId) {
+	public void setCidadeId(Long cidadeId) {
 		this.cidadeId = cidadeId;
 	}
 

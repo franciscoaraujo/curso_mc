@@ -5,11 +5,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CursoMcApplication implements CommandLineRunner {
+public class ApplicationRun implements CommandLineRunner {
 
 
 	public static void main(String[] args) {
-		SpringApplication.run(CursoMcApplication.class, args);
+		SpringApplication.run(ApplicationRun.class, args);
 	}
 
 	@Override
