@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.nelioalves.cursomc.curso_mc.domain.Cliente;
@@ -83,5 +84,13 @@ public class ClienteResource {
 		Page<ClienteDTO> listDTO = ClienteDTO.converterToDTO(pageCliente);
 		return ResponseEntity.ok().body(listDTO);
 	}
+	
+	@RequestMapping(value="/picture",method = RequestMethod.POST)
+	public ResponseEntity<Cliente> uploadProfilePicture(@RequestParam(name="file")MultipartFile file)
+			throws ObjectNotFoundException {
+		URI uri = service.uploadProfilePicture(file);
+		return ResponseEntity.created(uri).build();
+	}
+	
 
 }

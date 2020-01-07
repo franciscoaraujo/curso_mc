@@ -1,5 +1,6 @@
 package br.com.nelioalves.cursomc.curso_mc.services;
 
+import java.net.URI;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.com.nelioalves.cursomc.curso_mc.domain.Categoria;
 import br.com.nelioalves.cursomc.curso_mc.domain.Cidade;
@@ -36,7 +38,10 @@ public class ClienteService implements IService<Cliente> {
 
 	@Autowired
 	private BCryptPasswordEncoder pe;
-
+	
+	@Autowired
+	private S3Service s2Service;
+	
 	@Transactional
 	@Override
 	public Cliente cadastrar(Cliente cliente) {
@@ -113,5 +118,9 @@ public class ClienteService implements IService<Cliente> {
 	private void updateDate(Cliente newObj, Cliente t) {
 		newObj.setNome(t.getNome());
 		newObj.setEmail(t.getEmail());
+	}
+	/*upload de fotos do profile*/
+	public URI uploadProfilePicture(MultipartFile multipartFile ) {
+		return s2Service.uploadFile(multipartFile);
 	}
 }
