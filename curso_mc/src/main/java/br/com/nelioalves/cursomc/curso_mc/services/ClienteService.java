@@ -1,9 +1,11 @@
 package br.com.nelioalves.cursomc.curso_mc.services;
 
+import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,7 +44,13 @@ public class ClienteService implements IService<Cliente> {
 
 	@Autowired
 	private S3Service s2Service;
-
+	
+	@Autowired
+	private ImageService imageService;
+	
+	@Value("${img.prefix.client.profile}")
+	private String prefix;
+	
 	@Transactional
 	@Override
 	public Cliente cadastrar(Cliente cliente) {
@@ -127,11 +135,10 @@ public class ClienteService implements IService<Cliente> {
 		if (user == null) {
 			throw new AuthorizationException("Acesso negado");
 		}
-		URI uri = s2Service.uploadFile(multipartFile);
-		Cliente cli = repo.findById(user.getId()).get();
-		System.out.println(cli.getNome());
-		cli.setImageUrl(uri.toString());
-		repo.save(cli);
-		return uri;
+		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+		
+		String fileName = prefix + user.getId()+".jpg";
+		
+		return s2Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
 	}
 }
