@@ -51,6 +51,9 @@ public class ClienteService implements IService<Cliente> {
 	@Value("${img.prefix.client.profile}")
 	private String prefix;
 	
+	@Value("${img.profile.size}")
+	private int size;
+	
 	@Transactional
 	@Override
 	public Cliente cadastrar(Cliente cliente) {
@@ -135,10 +138,12 @@ public class ClienteService implements IService<Cliente> {
 		if (user == null) {
 			throw new AuthorizationException("Acesso negado");
 		}
+		
 		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+		jpgImage = imageService.cropSquare(jpgImage);
+		jpgImage = imageService.resize(jpgImage, size);
 		
 		String fileName = prefix + user.getId()+".jpg";
-		
 		return s2Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
 	}
 }
