@@ -44,16 +44,16 @@ public class ClienteService implements IService<Cliente> {
 
 	@Autowired
 	private S3Service s2Service;
-	
+
 	@Autowired
 	private ImageService imageService;
-	
+
 	@Value("${img.prefix.client.profile}")
 	private String prefix;
-	
+
 	@Value("${img.profile.size}")
 	private int size;
-	
+
 	@Transactional
 	@Override
 	public Cliente cadastrar(Cliente cliente) {
@@ -78,6 +78,18 @@ public class ClienteService implements IService<Cliente> {
 	@Override
 	public Collection<Cliente> buscarTodos() {
 		return repo.findAll();
+	}
+
+	public Cliente findByEmail(String email) {
+		UserSS user = UserService.authenticated();
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		Cliente obj = repo.findByEmail(email);
+		if (obj == null) {
+			throw new ObjectNotFoundException("Objeto não encontrado");
+		}
+		return obj;
 	}
 
 	@Override
@@ -138,12 +150,11 @@ public class ClienteService implements IService<Cliente> {
 		if (user == null) {
 			throw new AuthorizationException("Acesso negado");
 		}
-		
 		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
 		jpgImage = imageService.cropSquare(jpgImage);
 		jpgImage = imageService.resize(jpgImage, size);
-		
-		String fileName = prefix + user.getId()+".jpg";
+
+		String fileName = prefix + user.getId() + ".jpg";
 		return s2Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
 	}
 }
