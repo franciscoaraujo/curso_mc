@@ -33,15 +33,16 @@ public class ClienteService implements IService<Cliente> {
 
 	@Autowired
 	private ClienteRepository repo;
+
 	@Autowired
 	EnderecoRepository enderecoRepository;
 
 	@Autowired
 	private BCryptPasswordEncoder pe;
-	
+
 	@Autowired
 	private S3Service s2Service;
-	
+
 	@Transactional
 	@Override
 	public Cliente cadastrar(Cliente cliente) {
@@ -119,8 +120,18 @@ public class ClienteService implements IService<Cliente> {
 		newObj.setNome(t.getNome());
 		newObj.setEmail(t.getEmail());
 	}
-	/*upload de fotos do profile*/
-	public URI uploadProfilePicture(MultipartFile multipartFile ) {
-		return s2Service.uploadFile(multipartFile);
+
+	/* upload de fotos do profile */
+	public URI uploadProfilePicture(MultipartFile multipartFile) {
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		URI uri = s2Service.uploadFile(multipartFile);
+		Cliente cli = repo.findById(user.getId()).get();
+		System.out.println(cli.getNome());
+		cli.setImageUrl(uri.toString());
+		repo.save(cli);
+		return uri;
 	}
 }

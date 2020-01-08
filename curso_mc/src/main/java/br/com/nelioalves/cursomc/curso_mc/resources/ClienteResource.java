@@ -36,7 +36,6 @@ public class ClienteResource {
 		return ResponseEntity.ok(service.buscaPorId(id));
 	}
 
-	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Cliente> save(@Valid @RequestBody ClienteNewDTO clienteNewDTO)
 			throws ObjectNotFoundException {
@@ -45,8 +44,7 @@ public class ClienteResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-	
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> alteraCliente(@Valid @RequestBody ClienteDTO categoriaDTO, @PathVariable Long id)
 			throws ObjectNotFoundException {
@@ -55,24 +53,23 @@ public class ClienteResource {
 		service.alterar(obj);
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Long id)
-			throws ObjectNotFoundException {
+	public ResponseEntity<Void> delete(@PathVariable Long id) throws ObjectNotFoundException {
 		service.excluir(id);
 		return ResponseEntity.noContent().build();
 	}
-	
-	/*Lista todos os clientes*/
+
+	/* Lista todos os clientes */
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Collection<ClienteDTO>> findAll() throws ObjectNotFoundException {
 		Collection<ClienteDTO> listClienteDTO = ClienteDTO.converterToDTO(service.buscarTodos());
 		return ResponseEntity.ok().body(listClienteDTO);
 	}
-	
-	/*Lista todos os clientes paginados*/
+
+	/* Lista todos os clientes paginados */
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/page", method = RequestMethod.GET)
 	public ResponseEntity<Page<ClienteDTO>> getFindPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -84,13 +81,12 @@ public class ClienteResource {
 		Page<ClienteDTO> listDTO = ClienteDTO.converterToDTO(pageCliente);
 		return ResponseEntity.ok().body(listDTO);
 	}
-	
-	@RequestMapping(value="/picture",method = RequestMethod.POST)
-	public ResponseEntity<Cliente> uploadProfilePicture(@RequestParam(name="file")MultipartFile file)
+
+	@RequestMapping(value = "/picture", method = RequestMethod.POST)
+	public ResponseEntity<Cliente> uploadProfilePicture(@RequestParam(name = "file") MultipartFile file)
 			throws ObjectNotFoundException {
 		URI uri = service.uploadProfilePicture(file);
 		return ResponseEntity.created(uri).build();
 	}
-	
 
 }

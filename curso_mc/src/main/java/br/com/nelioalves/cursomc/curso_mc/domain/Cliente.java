@@ -26,24 +26,24 @@ import br.com.nelioalves.cursomc.curso_mc.domain.enums.TipoCliente;
 public class Cliente implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
-
+	
 	// @Column(unique=true)
 	private String email;
 	private String cpfOuCnpj;
 	private Integer tipo;
-
+	
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private Collection<Endereco> enderecos = new ArrayList<>();
-
+	
 	@ElementCollection
 	@CollectionTable(name = "telefone")
 	private Set<String> telefones = new HashSet<>();
-
+	
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "perfis")
 	private Set<Integer> perfis = new HashSet<>();
@@ -54,6 +54,17 @@ public class Cliente implements Serializable {
 
 	@JsonIgnore
 	private String senha;
+	
+	private String imageUrl;
+	
+	
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 
 	public Cliente() {
 		addPerfil(Perfil.CLIENTE);//por padrao ja vai ser criado um perfil de cliente
