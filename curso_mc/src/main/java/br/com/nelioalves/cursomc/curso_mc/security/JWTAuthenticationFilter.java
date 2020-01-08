@@ -28,9 +28,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	private JWTUtil jwtUtil;
 
 	public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
-		/*Fazendo a correcao do retorno de falha de authentication 
-		 * - Na classe JWTAuthenticationFilter, acrescentar uma implementação de AuthenticationFailureHandler e injetá-la em JWTAuthenticationFilter:
-		 * */
+		/*
+		 * Fazendo a correcao do retorno de falha de authentication - Na classe
+		 * JWTAuthenticationFilter, acrescentar uma implementação de
+		 * AuthenticationFailureHandler e injetá-la em JWTAuthenticationFilter:
+		 */
 		setAuthenticationFailureHandler(new JWTAuthenticationFailureHandler());
 		this.authenticationManager = authenticationManager;
 		this.jwtUtil = jwtUtil;
@@ -44,7 +46,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			/* aqui nao é o token do jwt, isso eh do Spring Security */
 			UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(creds.getEmail(),
 					creds.getSenha(), new ArrayList<>());
-			/* metodo que verifica se o usuario e senha sao validos com base nos contratos do UserDetailsService*/
+			/*
+			 * metodo que verifica se o usuario e senha sao validos com base nos contratos
+			 * do UserDetailsService
+			 */
 			Authentication auth = authenticationManager.authenticate(authToken);
 
 			return auth;
@@ -56,36 +61,31 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	}
 
 	@Override
-	protected void successfulAuthentication(HttpServletRequest request, 
-											HttpServletResponse response, 
-											FilterChain chain,
-											Authentication auth) throws IOException, ServletException {
+	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
+			Authentication auth) throws IOException, ServletException {
 
 		String userName = ((UserSS) auth.getPrincipal()).getUsername();
 		String token = jwtUtil.generateToken(userName);
 		response.addHeader("Authorization", "Bearer " + token);
+		response.addHeader("access-control-expose-headers", "Authorization");
 	}
 
 	private class JWTAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
 		@Override
-		public void onAuthenticationFailure(HttpServletRequest request, 
-											HttpServletResponse response,
-											AuthenticationException exception) throws IOException, ServletException {
-				
+		public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+				AuthenticationException exception) throws IOException, ServletException {
+
 			response.setStatus(401);
 			response.setContentType("application/json");
 			response.getWriter().append(json());
 		}
-		
+
 		private String json() {
-            long date = new Date().getTime();
-            return "{\"timestamp\": " + date + ", "
-                + "\"status\": 401, "
-                + "\"error\": \"Não autorizado\", "
-                + "\"message\": \"Email ou senha inválidos\", "
-                + "\"path\": \"/login\"}";
-        }
+			long date = new Date().getTime();
+			return "{\"timestamp\": " + date + ", " + "\"status\": 401, " + "\"error\": \"Não autorizado\", "
+					+ "\"message\": \"Email ou senha inválidos\", " + "\"path\": \"/login\"}";
+		}
 	}
 
 }
