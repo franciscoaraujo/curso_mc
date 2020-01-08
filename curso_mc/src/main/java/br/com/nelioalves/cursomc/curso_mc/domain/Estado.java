@@ -19,7 +19,7 @@ public class Estado implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 	private String nome;
 	
 	@JsonIgnore
@@ -29,16 +29,16 @@ public class Estado implements Serializable {
 	public Estado() {
 	}
 	
-	public Estado(Integer id, String nome) {
+	public Estado(Long id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
 	}
 	
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getNome() {
