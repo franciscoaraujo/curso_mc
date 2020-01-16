@@ -35,6 +35,7 @@ public class Cliente implements Serializable {
 	// @Column(unique=true)
 	private String email;
 	private String cpfOuCnpj;
+	
 	private Integer tipo;
 	
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
@@ -138,10 +139,6 @@ public class Cliente implements Serializable {
 
 	public void setPedidos(Collection<Pedido> pedidos) {
 		this.pedidos = pedidos;
-	}
-
-	public void setTipo(Integer tipo) {
-		this.tipo = tipo;
 	}
 
 	public String getSenha() {
