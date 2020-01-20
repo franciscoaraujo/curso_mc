@@ -34,14 +34,14 @@ public class MysqlConfig {
 		return true;
 	}
 
-	@Bean
-	public EmailService emailService() {
-		return new MockEmailService();
-	}
-
 //	@Bean
 //	public EmailService emailService() {
-//		return new SmtpEmailService();
+//		return new MockEmailService();
 //	}
+
+	@Bean
+	public EmailService emailService() {
+		return new SmtpEmailService();
+	}
 
 }
